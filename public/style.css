@@ -1,0 +1,19 @@
+body {
+  background-color: black;
+  color: white;
+  font-family: ubuntu;
+}
+table, td, th
+{
+	border:1px solid red;
+}
+th
+{
+	background-color: red;
+	color:white;
+}
+td 
+{
+	text-align:center;
+}
+
