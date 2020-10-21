@@ -17,7 +17,7 @@ resource "google_storage_bucket_acl" "paas-monitor" {
 
 resource "google_compute_backend_bucket" "paas-monitor" {
   name        = "paas-monitor"
-  bucket_name = "${google_storage_bucket.paas-monitor.name}"
+  bucket_name = google_storage_bucket.paas-monitor.name
 
   enable_cdn = true
 }
@@ -27,7 +27,7 @@ resource "google_storage_bucket_iam_binding" "paas-monitor" {
   role   = "roles/storage.objectViewer"
 
   members    = ["allUsers"]
-  depends_on = ["google_storage_bucket.paas-monitor"]
+  depends_on = [google_storage_bucket.paas-monitor]
 }
 
 resource "google_storage_bucket_object" "index" {
@@ -35,7 +35,7 @@ resource "google_storage_bucket_object" "index" {
   source        = "./public/index.html"
   bucket        = "paas-monitor-${var.project}-static-content"
   cache_control = "public, max-age=300"
-  depends_on    = ["google_storage_bucket.paas-monitor"]
+  depends_on    = [google_storage_bucket.paas-monitor]
 }
 
 resource "google_storage_bucket_object" "monitor-controller-js" {
@@ -43,7 +43,7 @@ resource "google_storage_bucket_object" "monitor-controller-js" {
   source        = "./public/monitor-controller.js"
   bucket        = "paas-monitor-${var.project}-static-content"
   cache_control = "public, max-age=300"
-  depends_on    = ["google_storage_bucket.paas-monitor"]
+  depends_on    = [google_storage_bucket.paas-monitor]
 }
 
 resource "google_storage_bucket_object" "style-css" {
@@ -52,7 +52,7 @@ resource "google_storage_bucket_object" "style-css" {
   content_type  = "text/css"
   bucket        = "paas-monitor-${var.project}-static-content"
   cache_control = "public, max-age=300"
-  depends_on    = ["google_storage_bucket.paas-monitor"]
+  depends_on    = [google_storage_bucket.paas-monitor]
 }
 
 resource "google_storage_bucket_object" "favicon" {
@@ -60,5 +60,5 @@ resource "google_storage_bucket_object" "favicon" {
   source       = "./public/favicon.ico"
   content_type = "image/vnd.microsoft.icon"
   bucket       = "paas-monitor-${var.project}-static-content"
-  depends_on   = ["google_storage_bucket.paas-monitor"]
+  depends_on   = [google_storage_bucket.paas-monitor]
 }

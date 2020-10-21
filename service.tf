@@ -7,18 +7,18 @@ resource "google_compute_backend_service" "paas-monitor" {
   session_affinity = "NONE"
 
   backend {
-    group = "${module.instance-group-region-a.instance_group_manager}"
+    group = module.instance-group-region-a.instance_group_manager
   }
 
   enable_cdn = true
 
-  health_checks = ["${module.instance-group-region-a.health_check}"]
+  health_checks = [module.instance-group-region-a.health_check]
 }
 
-module "instance-group-region-a" {
-  source = "./backend"
-  region = "${var.region}"
-  project = "${var.project}"
+module instance-group-region-a {
+  source  = "./backend"
+  region  = var.region
+  project = var.project
 }
 
 resource "google_compute_firewall" "paas-monitor" {
